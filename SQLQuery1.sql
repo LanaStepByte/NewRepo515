@@ -52,6 +52,23 @@ Create table StudentSubject
 Go
 
 
+Create table TeacherSubject
+(
+  Id int primary key identity(1,1), -- PK
+  TeacherId int not null,
+  SubjectId int not null,
+  Constraint FK_Teacher_Subject_TeacherId
+        Foreign key(TeacherId) 
+        references  Teachers(Id)
+        On delete cascade,
+  Constraint FK_Teacher_Subject_SubjectId 
+        Foreign key(SubjectId) 
+        references  Subjects(Id)
+        On delete cascade
+
+)
+Go
+
 
 INSERT INTO Students (FirstName, LastName, Age, Email, StatusIsActive)
 VALUES
@@ -131,3 +148,65 @@ values
 (15,4),
 (16,4)
 Go
+
+insert into TeacherSubject(TeacherId, SubjectId)
+values
+(1,1),
+(2,1),
+(3,1),
+(4,1),
+(5,2),
+(6,2),
+(7,2),
+(8,2),
+(9,3),
+(10,3),
+(11,3),
+(12,3),
+(13,4),
+(14,4),
+(15,4),
+(16,4)
+Go
+
+/*
+დაასელექტეთ 5 სტუდენტი რომლის ასაკი მეტია 20 ზე
+დაასელექტეთ ის საგნები რომლის საათების ხანგძლივობა მეტია 20 საათზე.
+დაასელექტეთ ის მასწავლებლები რომლებსაც არ აქვთ შევსებული ტელეფონის ნომერი.
+*/
+
+
+Select Top(5) * from Students as s where s.Age > 20
+
+Select FirstName + ' ' + LastName as FullName from Students as s
+
+Select * from Subjects sub where sub.AmountOfHours between 20 and 50
+
+Select * From Teachers t where t.id = 1
+Select * from Teachers t where t.PhoneNumber =''
+
+
+Select * from Students order by  Age desc 
+
+--JOIN 
+
+--student + subject
+
+select * from Students
+Select * from Subjects
+
+Select * From StudentSubject st_Subj
+Join Students st on st_Subj.StudentId = st.Id
+Join Subjects sub on st_Subj.SubjectId = sub.Id
+
+
+Select st.Id, st.FirstName + ' ' + st.LastName as FullName, sub.Title
+From StudentSubject st_Subj
+Inner Join Students st on st_Subj.StudentId = st.Id
+Inner Join Subjects sub on st_Subj.SubjectId = sub.Id
+
+
+-- Join --  Inner Join  -- 
+-- Left Join
+-- Right Join
+-- Full Join 
